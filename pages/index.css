@@ -1,0 +1,17 @@
+/*==body-page==*/
+.page {
+  background: #000000;
+}
+
+/*==header==*/
+.header {
+  outline: 1px solid red;
+  max-width: 880px;
+  min-height: 74px;
+  margin: 42px auto 0px;
+}
+
+.header__logo {
+  width: 142px;
+  height: 33px;
+}
