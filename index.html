@@ -11,5 +11,89 @@
     <header class="header">
       <img src="./images/logo.svg" alt="Логотип Место" class="header__logo" />
     </header>
+
+    <main class="content">
+      <section class="profile">
+        <div class="profile__info">
+          <img src="./images/profile_avatar.jpg" alt="Фото профиля" class="profile__avatar" />
+          <div class="profile__edit">
+            <h1 class="profile__name">Тони Старк</h1>
+            <button type="button" class="profile__edite-button"></button>
+            <p class="profile__description">Гений, миллиардер, плэйбой, филантроп</p>
+          </div>
+        </div>
+        <button type="button" class="profile__add-buttom"></button>
+      </section>
+
+      <section class="elements">
+        <div class="element">
+          <img src="./images/Bamyan_Afghanistan.jpg" alt="Бамиан Афганистан" class="element__img" />
+          <div class="element__label">
+            <p class="element__caption">Бамиан Афганистан</p>
+            <button type="button" class="element__like"></button>
+          </div>
+        </div>
+
+        <div class="element">
+          <img src="./images/monaco_grand_prix.jpg" alt="Гран-при Монако" class="element__img" />
+          <div class="element__label">
+            <p class="element__caption">Гран-при Монако</p>
+            <button type="button" class="element__like"></button>
+          </div>
+        </div>
+
+        <div class="element">
+          <img src="./images/Times_Square.jpg" alt="Таймс-сквер" class="element__img" />
+          <div class="element__label">
+            <p class="element__caption">Таймс-сквер</p>
+            <button type="button" class="element__like"></button>
+          </div>
+        </div>
+
+        <div class="element">
+          <img src="./images/Bratislava.jpg" alt="Братислава" class="element__img" />
+          <div class="element__label">
+            <p class="element__caption">Братислава</p>
+            <button type="button" class="element__like"></button>
+          </div>
+        </div>
+
+        <div class="element">
+          <img src="./images/Randy_Donuts.jpg" alt="Randy's Donuts" class="element__img" />
+          <div class="element__label">
+            <p class="element__caption">Randy's Donuts</p>
+            <button type="button" class="element__like"></button>
+          </div>
+        </div>
+
+        <div class="element">
+          <img
+            src="./images/California_Adventure_Park.jpg"
+            alt="Парк развлечений Калифорния"
+            class="element__img"
+          />
+          <div class="element__label">
+            <p class="element__caption">Парк развлечений Калифорния</p>
+            <button type="button" class="element__like"></button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__title">© 2020 Mesto Russia</p>
+    </footer>
+
+    <!--editpopup-->
+
+    <div class="editpopup">
+      <form class="editpopup__container">
+        <h2 class="editpopup__title">Редактировать профиль</h2>
+        <input type="text" class="editpopup__name" />
+        <input type="text" class="editpopup__description" />
+        <button class="editpopup__save" type="submit">Сохранить</button>
+        <button class="editpopup__close"></button>
+      </form>
+    </div>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
