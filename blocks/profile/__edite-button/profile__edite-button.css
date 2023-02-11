@@ -1,0 +1,17 @@
+.profile__edite-button {
+  grid-area: edit;
+  margin: 0px;
+  padding: 0px;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../../images/Edit_Button.svg);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+.profile__edite-button:hover {
+  opacity: 0.6;
+}

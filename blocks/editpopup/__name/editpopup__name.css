@@ -1,0 +1,14 @@
+.editpopup__name {
+  width: 100%;
+  min-height: 27px;
+  margin-top: 54px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.editpopup__name:focus {
+  border: none;
+  outline: 1px solid rgba(0, 0, 0, 0.2);
+}

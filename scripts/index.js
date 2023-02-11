@@ -11,7 +11,7 @@ const editPopupClose = document.querySelector('.editpopup__close');
 /*закрыть popUP*/
 function closePopup(evt) {
   evt.preventDefault();
-  editPopup.classList.remove('popup_opened');
+  editPopup.classList.remove('editpopup_opened');
   editPopupName.value = '';
   editPopupDescription.value = '';
 }
@@ -19,7 +19,7 @@ editPopupClose.addEventListener('click', closePopup);
 
 /*открыть popUP*/
 function openPopup() {
-  editPopup.classList.add('popup_opened');
+  editPopup.classList.add('editpopup_opened');
   console.log(editPopup.classList);
   editPopupName.value = profileName.textContent;
   editPopupDescription.value = profileDescription.textContent;
@@ -31,15 +31,15 @@ function savePopup(evt) {
   evt.preventDefault();
   profileName.textContent = editPopupName.value;
   profileDescription.textContent = editPopupDescription.value;
-  editPopup.classList.remove('popup_opened');
+  editPopup.classList.remove('editpopup_opened');
 }
 editPopupSave.addEventListener('click', savePopup);
 
 /* Поставить/убрать LIKE*/
-like.forEach((element /*перебор массива всех LIKEов*/) =>
+/*перебор массива всех LIKEов*/
+like.forEach(element =>
+  /*каждому элементу добавить по клику добавить функцию смены сердечка*/
   element.addEventListener('click', function () {
-    /*каждому элементу добавить по клику добавить функции смены цвета*/ element.classList.toggle(
-      'element__like_active'
-    );
+    element.classList.toggle('element__like_active');
   })
 );
