@@ -1,6 +1,10 @@
 .element__img {
-  max-width: 282px;
+  /*Добавьте размеры изображения в css, чтобы изображение с любыми пропорциями не деформировалось при изменении контента.OK*/
+  width: 282px;
+  height: 282px;
+  /*Добавьте стиль object-fit: cover в css OK*/
   object-fit: cover;
-  position: 50% 50%;
+  /*Некорректное название стиля OK*/
+  object-position: 50% 50%;
   aspect-ratio: auto 1 / 1;
 }

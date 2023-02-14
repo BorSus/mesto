@@ -12,3 +12,11 @@
   margin: 22px 0px 25px;
   padding: 0px;
 }
+
+@media screen and (max-width: 450px) {
+  .profile__edit {
+    margin: 26px 0px 31px;
+    row-gap: 10px;
+    column-gap: 0px;
+  }
+}

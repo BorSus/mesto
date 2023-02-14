@@ -18,81 +18,123 @@
           <img src="./images/profile_avatar.jpg" alt="Фото профиля" class="profile__avatar" />
           <div class="profile__edit">
             <h1 class="profile__name">Тони Старк</h1>
-            <button type="button" class="profile__edite-button"></button>
+            <button
+              type="button"
+              class="profile__edite-button"
+              aria-label="Редактировать профиль"
+            ></button>
             <p class="profile__description">Гений, миллиардер, плэйбой, филантроп</p>
           </div>
         </div>
-        <button type="button" class="profile__add-buttom"></button>
+        <!--Для кнопок без текстового описания можно добавить атрибут aria-label OK-->
+        <!--Устраните опечатку buttom => button OK-->
+        <button type="button" class="profile__add-button" aria-label="Добавить фото"></button>
       </section>
 
       <section class="elements">
-        <div class="element">
-          <img src="./images/Bamyan_Afghanistan.jpg" alt="Бамиан Афганистан" class="element__img" />
+        <!--Вместо div тут можно использовать семантический тег article. OK-->
+        <article class="element">
+          <img src="./images/bamyan_afghanistan.jpg" alt="Бамиан Афганистан" class="element__img" />
           <div class="element__label">
-            <p class="element__caption">Бамиан Афганистан</p>
-            <button type="button" class="element__like"></button>
+            <!--Тут должен быть заголовок. OK-->
+            <h2 class="element__caption">Бамиан Афганистан</h2>
+            <!--Для кнопок без текстового описания можно добавить атрибут aria-label OK-->
+            <button type="button" class="element__like" aria-label="Нравится"></button>
           </div>
-        </div>
-
-        <div class="element">
+        </article>
+        <!--Вместо div тут можно использовать семантический тег article. OK-->
+        <article class="element">
           <img src="./images/monaco_grand_prix.jpg" alt="Гран-при Монако" class="element__img" />
           <div class="element__label">
-            <p class="element__caption">Гран-при Монако</p>
-            <button type="button" class="element__like"></button>
+            <!--Тут должен быть заголовок. OK-->
+            <h2 class="element__caption">Гран-при Монако</h2>
+            <!--Для кнопок без текстового описания можно добавить атрибут aria-label OK-->
+            <button type="button" class="element__like" aria-label="Нравится"></button>
           </div>
-        </div>
-
-        <div class="element">
-          <img src="./images/Times_Square.jpg" alt="Таймс-сквер" class="element__img" />
+        </article>
+        <!--Вместо div тут можно использовать семантический тег article. OK-->
+        <article class="element">
+          <img src="./images/times_square.jpg" alt="Таймс-сквер" class="element__img" />
           <div class="element__label">
-            <p class="element__caption">Таймс-сквер</p>
-            <button type="button" class="element__like"></button>
+            <!--Тут должен быть заголовок. OK-->
+            <h2 class="element__caption">Таймс-сквер</h2>
+            <!--Для кнопок без текстового описания можно добавить атрибут aria-label OK-->
+            <button type="button" class="element__like" aria-label="Нравится"></button>
           </div>
-        </div>
-
-        <div class="element">
-          <img src="./images/Bratislava.jpg" alt="Братислава" class="element__img" />
+        </article>
+        <!--Вместо div тут можно использовать семантический тег article. OK-->
+        <article class="element">
+          <img src="./images/bratislava.jpg" alt="Братислава" class="element__img" />
           <div class="element__label">
-            <p class="element__caption">Братислава</p>
-            <button type="button" class="element__like"></button>
+            <!--Тут должен быть заголовок. OK-->
+            <h2 class="element__caption">Братислава</h2>
+            <!--Для кнопок без текстового описания можно добавить атрибут aria-label OK-->
+            <button type="button" class="element__like" aria-label="Нравится"></button>
           </div>
-        </div>
-
-        <div class="element">
-          <img src="./images/Randy_Donuts.jpg" alt="пончики Рэнди" class="element__img" />
+        </article>
+        <!--Вместо div тут можно использовать семантический тег article. OK-->
+        <article class="element">
+          <img src="./images/randy_donuts.jpg" alt="пончики Рэнди" class="element__img" />
           <div class="element__label">
-            <p class="element__caption">Randy's Donuts</p>
-            <button type="button" class="element__like"></button>
+            <!--Тут должен быть заголовок. OK-->
+            <h2 class="element__caption">Randy's Donuts</h2>
+            <!--Для кнопок без текстового описания можно добавить атрибут aria-label OK-->
+            <button type="button" class="element__like" aria-label="Нравится"></button>
           </div>
-        </div>
-
-        <div class="element">
+        </article>
+        <!--Вместо div тут можно использовать семантический тег article. OK-->
+        <article class="element">
           <img
-            src="./images/California_Adventure_Park.jpg"
+            src="./images/california_adventure_park.jpg"
             alt="Парк развлечений Калифорния"
             class="element__img"
           />
           <div class="element__label">
-            <p class="element__caption">Парк развлечений Калифорния</p>
-            <button type="button" class="element__like"></button>
+            <!--Тут должен быть заголовок. OK-->
+            <h2 class="element__caption">Парк развлечений Калифорния</h2>
+            <!--Для кнопок без текстового описания можно добавить атрибут aria-label OK-->
+            <button type="button" class="element__like" aria-label="Нравится"></button>
           </div>
-        </div>
+        </article>
       </section>
     </main>
     <footer class="footer">
+      <!--Стандартные стили margin необходимо переопределить OK-->
       <p class="footer__title">© 2020 Mesto Russia</p>
     </footer>
 
-    <!--editpopup-->
+    <!--popup-->
+    <!--Название класса не соответствует заданию. Необходимо использовать класс popup.OK-->
+    <div class="popup">
+      <div class="popup__container">
+        <!--Перед формой добавьте обертку div, в которой будет лежать кнопка закрытия и сама форма.OK-->
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <!--Для кнопок без текстового описания можно добавить атрибут aria-label OK-->
+        <!--Кнопку необходимо вынести из формы в див контейнер.OK-->
+        <!--Необходимо добавить атрибут type для всех кнопок на странице OK-->
+        <button class="popup__close" aria-label="Закрыть без сохранения" type="button"></button>
+        <form class="popup__form" name="form-edite">
+          <!--Добавьте атрибут name для полей ввода. OK -->
+          <!--Оба input имеют одинаковые стили, им необходим одинаковый класс элемента + разный модификатор, если необходимо для js.OK-->
+          <input
+            type="text"
+            class="popup__input-text popup__input-text_legend_name"
+            name="name"
+            value=""
+          />
 
-    <div class="editpopup">
-      <form class="editpopup__container">
-        <h2 class="editpopup__title">Редактировать профиль</h2>
-        <input type="text" class="editpopup__name" />
-        <input type="text" class="editpopup__description" />
-        <button class="editpopup__save" type="submit">Сохранить</button>
-        <button class="editpopup__close"></button>
-      </form>
+          <!--Добавьте атрибут name для полей ввода. OK -->
+          <!--Оба input имеют одинаковые стили, им необходим одинаковый класс элемента + разный модификатор, если необходимо для js.OK-->
+          <input
+            type="text"
+            class="popup__input-text popup__input-text_legend_description"
+            name="description"
+            value=""
+          />
+          <!--Стандартный border необходимо обнулить OK-->
+          <button class="popup__save" type="submit">Сохранить</button>
+        </form>
+      </div>
     </div>
     <script src="./scripts/index.js"></script>
   </body>

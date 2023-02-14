@@ -1,8 +1,10 @@
 .element {
+  margin: 0px;
+  padding: 0px;
   background-color: white;
   border-radius: 10px;
   max-width: 282px;
-  min-height: 361px;
+  height: 361px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

@@ -1,4 +1,10 @@
 .profile__avatar {
+  /*Добавьте стиль object-fit: cover в css, чтобы изображение с любыми пропорциями не деформировалось при изменении контента. OK*/
+  object-fit: cover;
+  object-position: 50% 50%;
+  aspect-ratio: auto 1 / 1;
+  margin: 0px;
+  padding: 0px;
   width: 120px;
   height: 120px;
   border-radius: 100%;

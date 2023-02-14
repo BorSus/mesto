@@ -8,10 +8,19 @@
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 7.5px 7.5px;
   border: 1px solid #ffffff;
   cursor: pointer;
   transition: opacity 0.2s linear;
 }
 .profile__edite-button:hover {
   opacity: 0.6;
+}
+
+@media screen and (max-width: 450px) {
+  /* Размер .profile__edite-button не соответствует макету OK*/
+  .profile__edite-button {
+    width: 18px;
+    height: 18px;
+  }
 }
