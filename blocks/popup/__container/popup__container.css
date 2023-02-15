@@ -7,14 +7,15 @@
   border-radius: 10px;
   color: #000000;
   width: 430px;
-  height: 330px;
-  margin: 195px 0px 0px;
+  height: max-content;
+  /*Окошко должно быть отцентрировано. Используйте значение auto OK*/
+  margin: 195px auto 0px;
 }
 @media screen and (max-width: 550px) {
   .popup__container {
     width: 288px;
-    height: 322px;
-    margin: 124px 19px 0px;
+
+    /*Этот стиль необходимо удалить*/
     padding: 25px 22px 25px;
   }
 }

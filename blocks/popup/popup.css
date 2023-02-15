@@ -1,5 +1,5 @@
 .popup {
-  min-height: 100%;
+  height: 100%;
   display: none;
   justify-content: center;
   position: fixed;

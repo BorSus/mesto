@@ -1,5 +1,4 @@
 .profile__add-button {
-  /*Устраните опечатку buttom => button OK*/
   margin: 0px;
   padding: 0px;
   width: 150px;
@@ -20,7 +19,6 @@
 @media screen and (max-width: 450px) {
   .profile__add-button {
     width: 100%;
-    /*320 Размер фона кнопки не соответствует макету OK*/
     background-size: 16px 16px;
   }
 }

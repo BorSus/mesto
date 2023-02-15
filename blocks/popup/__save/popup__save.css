@@ -1,5 +1,4 @@
 .popup__save {
-  /*Добавьте стиль cursor: pointer; OK*/
   cursor: pointer;
   padding: 0px;
   width: 100%;
@@ -12,7 +11,6 @@
   background-color: #000000;
   color: #ffffff;
   border-radius: 2px;
-  /*Стандартный border необходимо обнулить OK*/
   border: none;
   transition: opacity 0.2s linear;
 }
