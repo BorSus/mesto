@@ -9,13 +9,11 @@
   width: 430px;
   height: max-content;
   /*Окошко должно быть отцентрировано. Используйте значение auto OK*/
-  margin: 195px auto 0px;
+  margin: auto;
 }
 @media screen and (max-width: 550px) {
   .popup__container {
     width: 288px;
-
-    /*Этот стиль необходимо удалить*/
     padding: 25px 22px 25px;
   }
 }
