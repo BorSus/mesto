@@ -1,5 +1,5 @@
 .element__img {
-  /*Добавьте стиль display: block;*/
+  cursor: pointer;
   display: block;
   width: 282px;
   height: 282px;
