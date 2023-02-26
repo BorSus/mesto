@@ -1,3 +1,4 @@
+//=============================Переменные=========
 const initialCards = [
   {
     name: 'Архыз',
@@ -24,65 +25,83 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-
+//!!Если добавить слово button ко всем кнопкам - станет яснее, что это кнопки. OK
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
-const deletePlace = document.querySelector('.element__delete');
+const cardsFrame = document.querySelector('.elements');
+const cardPlace = document.querySelector('#card-place').content.querySelector('.element');
+//const buttonDeletePlace = document.querySelector('.element__delete');
 // PopupImage
-const imagePopup = document.querySelector('#popupImage');
-const closeImage = document.querySelector('#closeImage');
+const fullImgPopup = document.querySelector('#popupFullImg');
+const buttonCloseImage = document.querySelector('#closeImage');
+const popupImage = document.querySelector('.popup__image');
+const popupCaption = document.querySelector('.popup__caption');
 //кнопка редактирования профиля
-const editeProfile = document.querySelector('.profile__edite-button');
+const buttonEditeProfile = document.querySelector('.profile__edite-button');
 // PopupProfile
 const profilePopup = document.querySelector('#popupProfile');
-const closeProfile = document.querySelector('#closeProfile');
+const buttonCloseProfile = document.querySelector('#closeProfile');
 const formProfile = document.querySelector('#formProfile');
 const inputName = document.querySelector('#inputName');
 const inputDescription = document.querySelector('#inputDescription');
 //кнопка добавления места
-const addPlaceButton = document.querySelector('.profile__add-button');
+const buttonAddPlace = document.querySelector('.profile__add-button');
 // PopupPlace
 const placePopup = document.querySelector('#popupPlace');
-const closePlace = document.querySelector('#closePlace');
+const buttonClosePlace = document.querySelector('#closePlace');
 const formPlace = document.querySelector('#formPlace');
 const inputPlacename = document.querySelector('#inputPlacename');
 const inputImageLink = document.querySelector('#inputImageLink');
 
-// функция добавить Место
-function addPlace(placename, linkImage) {
-  const cardImage = document.querySelector('#card-image').content;
-  const element = cardImage.querySelector('.element').cloneNode(true);
-  const placeDel = element.querySelector('.element__delete');
-  element.querySelector('.element__img').src = linkImage;
-  element.querySelector('.element__caption').textContent = placename;
-  element.querySelector('.element__img').alt = placename;
-  element.querySelector('.element__like').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('element__like_active');
-  });
-  placeDel.addEventListener('click', function (evt) {
-    const placeCardDelete = evt.target.closest('.element');
-    placeCardDelete.remove();
-  });
-  element.querySelector('.element__img').addEventListener('click', function () {
-    document.querySelector('.popup__image').src = linkImage;
-    document.querySelector('.popup__caption').textContent = placename;
-    document.querySelector('.popup__image').alt = placename;
-    openPopup(imagePopup);
-  });
+//============================Функции=============
+//функция поставить лайк
+const handleLikeClick = function (evt) {
+  evt.target.classList.toggle('element__like_active');
+};
+//функция удалить карточку
+const handleDelPlaceClick = function (evt) {
+  evt.target.closest('.element').remove();
+};
+//функция открыть попап с полным изображением
+const openPopupImage = function (evt) {
+  popupImage.src = evt.target.src;
+  popupImage.alt = evt.target.alt;
+  popupCaption.textContent = evt.target.alt;
+  openPopup(fullImgPopup);
+};
 
-  document.querySelector('.elements').prepend(element);
+// функция создать новое Место
+function addPlace(cardData) {
+  const element = cardPlace.cloneNode(true);
+  const buttonDeletePlace = element.querySelector('.element__delete');
+  const image = element.querySelector('.element__img');
+  const caption = element.querySelector('.element__caption');
+  image.src = cardData.link;
+  caption.textContent = cardData.name;
+  image.alt = cardData.name;
+  //!!В качестве второго параметра метода addEventListener следует использовать ранее объявленую функцию. OK
+  //добавить событие для кнопки ЛАЙК
+  element.querySelector('.element__like').addEventListener('click', handleLikeClick);
+  //добавить событие для кнопки УДАЛИТЬ
+  buttonDeletePlace.addEventListener('click', handleDelPlaceClick);
+  //добавить событие для клика по КАРТИНКЕ
+  image.addEventListener('click', openPopupImage);
+  return element;
 }
-// перебор массива, добавление мест из  initialCards
-initialCards.forEach(item => addPlace(item.name, item.link));
+
+// функция добавить новое Место
+function renderCard(card) {
+  cardsFrame.prepend(addPlace(card));
+}
 
 //закрыть Popup
 const closePopup = function (namePopup) {
   namePopup.classList.remove('popup_opened');
 };
 //открыть Popup
-function openPopup(namePopup) {
+const openPopup = function (namePopup) {
   namePopup.classList.add('popup_opened');
-}
+};
 
 //закрыть PopupProfile
 function closePopupProfile(evt) {
@@ -107,36 +126,33 @@ function savePopupProfile(evt) {
   closePopup(profilePopup);
 }
 
-//открыть PopupPlace
-function openPopupPlace() {
-  openPopup(placePopup);
-}
 //закрыть PopupPlace
 function closePopupPlace() {
-  inputPlacename.value = '';
-  inputImageLink.value = '';
+  formPlace.reset();
   closePopup(placePopup);
 }
+
 //сохранить изменения и закрыть PopupPlace
 function savePopupPlace(evt) {
   evt.preventDefault();
-  if (inputPlacename.value === '') {
-    alert('Отсутствует назавание места');
-  } else if (inputImageLink.value == '') {
-    alert('Отсутствует ссылка на изображение места');
-  } else {
-    console.log(inputName.value);
-    addPlace(inputPlacename.value, inputImageLink.value);
-    inputPlacename.value = '';
-    inputImageLink.value = '';
-    closePopup(placePopup);
-  }
+  const cardData = {
+    name: inputPlacename.value,
+    link: inputImageLink.value
+  };
+  renderCard(cardData);
+  //!!Очищать поля формы можно с помощью метода формы reset OK
+  formPlace.reset();
+  closePopup(placePopup);
 }
 
-closeProfile.addEventListener('click', closePopupProfile);
-editeProfile.addEventListener('click', openPopupProfile);
+// перебор массива, добавление мест из  initialCards
+initialCards.forEach(item => renderCard(item));
+
+//назначить событию обработчик
+buttonCloseProfile.addEventListener('click', closePopupProfile);
+buttonEditeProfile.addEventListener('click', openPopupProfile);
 formProfile.addEventListener('submit', savePopupProfile);
-addPlaceButton.addEventListener('click', openPopupPlace);
-closePlace.addEventListener('click', closePopupPlace);
+buttonAddPlace.addEventListener('click', () => openPopup(placePopup));
+buttonClosePlace.addEventListener('click', closePopupPlace);
 formPlace.addEventListener('submit', savePopupPlace);
-closeImage.addEventListener('click', () => closePopup(imagePopup));
+buttonCloseImage.addEventListener('click', () => closePopup(fullImgPopup));

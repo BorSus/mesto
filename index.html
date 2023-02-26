@@ -46,13 +46,23 @@
         ></button>
 
         <form class="popup__form" name="profile-form" id="formProfile">
-          <input type="text" class="popup__input-text" id="inputName" name="name" value="" />
+          <!-- Пожалуйста, добавьте атрибут placeholder для полей ввода этой формы OK-->
+          <input
+            type="text"
+            class="popup__input-text"
+            id="inputName"
+            name="name"
+            value=""
+            placeholder="Имя профиля"
+          />
+          <!-- Пожалуйста, добавьте атрибут placeholder для полей ввода этой формы OK-->
           <input
             type="text"
             class="popup__input-text"
             name="description"
             id="inputDescription"
             value=""
+            placeholder="Описание профиля"
           />
           <button class="popup__save" type="submit" id="saveProfile">Сохранить</button>
         </form>
@@ -70,6 +80,7 @@
         ></button>
 
         <form class="popup__form" name="place-form" id="formPlace">
+          <!--Вы можете сделать поля ввода обязательными с помощью required OK-->
           <input
             type="text"
             class="popup__input-text"
@@ -77,21 +88,25 @@
             id="inputPlacename"
             value=""
             placeholder="Название"
+            required
           />
+          <!--Вы можете сделать поля ввода обязательными с помощью required OK-->
+          <!-- Т.к. это поле ввода предназначено для ссылки, то можно ему установить type="url". OK-->
           <input
-            type="text"
+            type="url"
             class="popup__input-text"
             name="image-link"
             id="inputImageLink"
             value=""
             placeholder="Ссылка на картинку"
+            required
           />
           <button class="popup__save" type="submit" id="savePlace">Сохранить</button>
         </form>
       </div>
     </div>
 
-    <div class="popup" id="popupImage">
+    <div class="popup" id="popupFullImg">
       <figure class="popup__frame">
         <button
           class="popup__close"
@@ -104,7 +119,7 @@
       </figure>
     </div>
 
-    <template id="card-image">
+    <template id="card-place">
       <article class="element">
         <button type="button" class="element__delete" aria-label="Удалить"></button>
         <img src="./images/bratislava.jpg" alt="описание картинки" class="element__img" />
