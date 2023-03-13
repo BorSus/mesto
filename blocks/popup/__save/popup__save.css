@@ -1,9 +1,10 @@
 .popup__save {
+  box-sizing: border-box;
   cursor: pointer;
   padding: 0px;
+  margin: 0px;
   width: 100%;
   min-height: 50px;
-  margin-top: 49px;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;

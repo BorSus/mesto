@@ -25,12 +25,10 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-//!!Если добавить слово button ко всем кнопкам - станет яснее, что это кнопки. OK
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const cardsFrame = document.querySelector('.elements');
 const cardPlace = document.querySelector('#card-place').content.querySelector('.element');
-//const buttonDeletePlace = document.querySelector('.element__delete');
 // PopupImage
 const fullImgPopup = document.querySelector('#popupFullImg');
 const buttonCloseImage = document.querySelector('#closeImage');
@@ -44,6 +42,8 @@ const buttonCloseProfile = document.querySelector('#closeProfile');
 const formProfile = document.querySelector('#formProfile');
 const inputName = document.querySelector('#inputName');
 const inputDescription = document.querySelector('#inputDescription');
+const inputNameError = document.querySelector('#inputName-error');
+const inputDescriptionError = document.querySelector('#inputDescription-error');
 //кнопка добавления места
 const buttonAddPlace = document.querySelector('.profile__add-button');
 // PopupPlace
@@ -52,6 +52,7 @@ const buttonClosePlace = document.querySelector('#closePlace');
 const formPlace = document.querySelector('#formPlace');
 const inputPlacename = document.querySelector('#inputPlacename');
 const inputImageLink = document.querySelector('#inputImageLink');
+const buttonSavePlace = document.querySelector('#savePlace');
 
 //============================Функции=============
 //функция поставить лайк
@@ -69,7 +70,6 @@ const openPopupImage = function (evt) {
   popupCaption.textContent = evt.target.alt;
   openPopup(fullImgPopup);
 };
-
 // функция создать новое Место
 function addPlace(cardData) {
   const element = cardPlace.cloneNode(true);
@@ -79,7 +79,6 @@ function addPlace(cardData) {
   image.src = cardData.link;
   caption.textContent = cardData.name;
   image.alt = cardData.name;
-  //!!В качестве второго параметра метода addEventListener следует использовать ранее объявленую функцию. OK
   //добавить событие для кнопки ЛАЙК
   element.querySelector('.element__like').addEventListener('click', handleLikeClick);
   //добавить событие для кнопки УДАЛИТЬ
@@ -88,12 +87,10 @@ function addPlace(cardData) {
   image.addEventListener('click', openPopupImage);
   return element;
 }
-
 // функция добавить новое Место
 function renderCard(card) {
   cardsFrame.prepend(addPlace(card));
 }
-
 //закрыть Popup
 const closePopup = function (namePopup) {
   namePopup.classList.remove('popup_opened');
@@ -102,22 +99,16 @@ const closePopup = function (namePopup) {
 const openPopup = function (namePopup) {
   namePopup.classList.add('popup_opened');
 };
-
-//закрыть PopupProfile
-function closePopupProfile(evt) {
-  evt.preventDefault();
-  closePopup(profilePopup);
-  inputName.value = '';
-  inputDescription.value = '';
-}
-
 //открыть PopupProfile
 function openPopupProfile() {
-  openPopup(profilePopup);
   inputName.value = profileName.textContent;
   inputDescription.value = profileDescription.textContent;
+  inputNameError.classList.remove('popup__error_active');
+  inputDescriptionError.classList.remove('popup__error_active');
+  inputName.classList.remove('popup__input-text_type_error');
+  inputDescription.classList.remove('popup__input-text_type_error');
+  openPopup(profilePopup);
 }
-
 //сохранить изменения и закрыть PopupProfile
 function savePopupProfile(evt) {
   evt.preventDefault();
@@ -125,13 +116,6 @@ function savePopupProfile(evt) {
   profileDescription.textContent = inputDescription.value;
   closePopup(profilePopup);
 }
-
-//закрыть PopupPlace
-function closePopupPlace() {
-  formPlace.reset();
-  closePopup(placePopup);
-}
-
 //сохранить изменения и закрыть PopupPlace
 function savePopupPlace(evt) {
   evt.preventDefault();
@@ -140,19 +124,52 @@ function savePopupPlace(evt) {
     link: inputImageLink.value
   };
   renderCard(cardData);
-  //!!Очищать поля формы можно с помощью метода формы reset OK
   formPlace.reset();
+  buttonSavePlace.classList.add('popup__save_type_disabled');
   closePopup(placePopup);
 }
+//функция закрыть popup по клику на оверлай
+const handleOverlaypopupClick = popup => {
+  popup.addEventListener('click', e => {
+    if (e.target === popup) {
+      closePopup(popup);
+    }
+  });
+};
+//функция закрыть popup по нажатию ESC
+const handlePopupKeydownEsc = (popup, openPopupClass) => {
+  document.addEventListener('keydown', e => {
+    if (e.code === 'Escape' && popup.classList.contains(openPopupClass)) {
+      closePopup(popup);
+    }
+  });
+};
+//функция добавления события на кнопку закрыть popup
+const handleButtonCloseClick = (popup, closeButtonSelector) => {
+  const buttonClose = popup.querySelector(closeButtonSelector);
+  buttonClose.addEventListener('click', () => closePopup(popup));
+};
+
+//функция добавление событий закрытия popup
+const addEventListenersClose = config => {
+  //найти все popup
+  const popupArray = Array.from(document.querySelectorAll(config.popupSelector));
+  popupArray.forEach(popup => {
+    handleOverlaypopupClick(popup);
+    handlePopupKeydownEsc(popup, config.openPopupClass);
+    handleButtonCloseClick(popup, config.closeButtonSelector);
+  });
+};
 
 // перебор массива, добавление мест из  initialCards
 initialCards.forEach(item => renderCard(item));
-
 //назначить событию обработчик
-buttonCloseProfile.addEventListener('click', closePopupProfile);
+addEventListenersClose({
+  popupSelector: '.popup',
+  closeButtonSelector: '.popup__close',
+  openPopupClass: 'popup_opened'
+});
 buttonEditeProfile.addEventListener('click', openPopupProfile);
 formProfile.addEventListener('submit', savePopupProfile);
 buttonAddPlace.addEventListener('click', () => openPopup(placePopup));
-buttonClosePlace.addEventListener('click', closePopupPlace);
 formPlace.addEventListener('submit', savePopupPlace);
-buttonCloseImage.addEventListener('click', () => closePopup(fullImgPopup));

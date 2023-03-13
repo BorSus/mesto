@@ -46,25 +46,38 @@
         ></button>
 
         <form class="popup__form" name="profile-form" id="formProfile">
-          <!-- Пожалуйста, добавьте атрибут placeholder для полей ввода этой формы OK-->
-          <input
-            type="text"
-            class="popup__input-text"
-            id="inputName"
-            name="name"
-            value=""
-            placeholder="Имя профиля"
-          />
-          <!-- Пожалуйста, добавьте атрибут placeholder для полей ввода этой формы OK-->
-          <input
-            type="text"
-            class="popup__input-text"
-            name="description"
-            id="inputDescription"
-            value=""
-            placeholder="Описание профиля"
-          />
-          <button class="popup__save" type="submit" id="saveProfile">Сохранить</button>
+          <div class="popup__valid-input">
+            <input
+              type="text"
+              class="popup__input-text"
+              id="inputName"
+              name="name"
+              value=""
+              placeholder="Имя профиля"
+              minlength="2"
+              maxlength="40"
+              required
+            />
+            <span class="popup__error" id="inputName-error">&nbsp</span>
+          </div>
+
+          <div class="popup__valid-input">
+            <input
+              type="text"
+              class="popup__input-text"
+              name="description"
+              id="inputDescription"
+              value=""
+              placeholder="Описание профиля"
+              minlength="2"
+              maxlength="200"
+              required
+            />
+            <span class="popup__error" id="inputDescription-error">&nbsp</span>
+          </div>
+          <button class="popup__save popup__save_type_disabled" type="submit" id="saveProfile">
+            Сохранить
+          </button>
         </form>
       </div>
     </div>
@@ -80,28 +93,35 @@
         ></button>
 
         <form class="popup__form" name="place-form" id="formPlace">
-          <!--Вы можете сделать поля ввода обязательными с помощью required OK-->
-          <input
-            type="text"
-            class="popup__input-text"
-            name="placename"
-            id="inputPlacename"
-            value=""
-            placeholder="Название"
-            required
-          />
-          <!--Вы можете сделать поля ввода обязательными с помощью required OK-->
-          <!-- Т.к. это поле ввода предназначено для ссылки, то можно ему установить type="url". OK-->
-          <input
-            type="url"
-            class="popup__input-text"
-            name="image-link"
-            id="inputImageLink"
-            value=""
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <button class="popup__save" type="submit" id="savePlace">Сохранить</button>
+          <div class="popup__valid-input">
+            <input
+              type="text"
+              class="popup__input-text"
+              name="placename"
+              id="inputPlacename"
+              value=""
+              placeholder="Название"
+              minlength="2"
+              maxlength="30"
+              required
+            />
+            <span class="popup__error" id="inputPlacename-error">&nbsp</span>
+          </div>
+          <div class="popup__valid-input">
+            <input
+              type="url"
+              class="popup__input-text"
+              name="image-link"
+              id="inputImageLink"
+              value=""
+              placeholder="Ссылка на картинку"
+              required
+            />
+            <span class="popup__error" id="inputImageLink-error">&nbsp</span>
+          </div>
+          <button class="popup__save popup__save_type_disabled" type="submit" id="savePlace">
+            Сохранить
+          </button>
         </form>
       </div>
     </div>
@@ -130,5 +150,6 @@
       </article>
     </template>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 </html>

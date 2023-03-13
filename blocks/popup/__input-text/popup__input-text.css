@@ -1,7 +1,7 @@
 .popup__input-text {
   box-sizing: border-box;
   width: 100%;
-  margin: 30px auto 0px;
+  margin: 0px auto;
   padding: 0px;
   min-height: 27px;
   font-weight: 400;
@@ -11,6 +11,5 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .popup__input-text:focus {
-  border: none;
   outline: 1px solid rgba(0, 0, 0, 0.2);
 }
