@@ -44,6 +44,7 @@ const inputName = document.querySelector('#inputName');
 const inputDescription = document.querySelector('#inputDescription');
 const inputNameError = document.querySelector('#inputName-error');
 const inputDescriptionError = document.querySelector('#inputDescription-error');
+const buttonSaveProfile = document.querySelector('#saveProfile');
 //кнопка добавления места
 const buttonAddPlace = document.querySelector('.profile__add-button');
 // PopupPlace
@@ -91,13 +92,21 @@ function addPlace(cardData) {
 function renderCard(card) {
   cardsFrame.prepend(addPlace(card));
 }
+//функция закрыть popup по нажатию ESC
+const closePopupKeydownEsc = e => {
+  if (e.code === 'Escape') {
+    closePopup(document.querySelector('.popup_opened'));
+  }
+};
 //закрыть Popup
 const closePopup = function (namePopup) {
   namePopup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupKeydownEsc);
 };
 //открыть Popup
 const openPopup = function (namePopup) {
   namePopup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupKeydownEsc);
 };
 //открыть PopupProfile
 function openPopupProfile() {
@@ -107,6 +116,8 @@ function openPopupProfile() {
   inputDescriptionError.classList.remove('popup__error_active');
   inputName.classList.remove('popup__input-text_type_error');
   inputDescription.classList.remove('popup__input-text_type_error');
+  buttonSaveProfile.classList.add('popup__save_type_disabled');
+  buttonSaveProfile.setAttribute('disabled', '');
   openPopup(profilePopup);
 }
 //сохранить изменения и закрыть PopupProfile
@@ -125,7 +136,11 @@ function savePopupPlace(evt) {
   };
   renderCard(cardData);
   formPlace.reset();
+  /* Добавление класса и атрибута disabled, не нужно. по событию reset проверяется валидация кнопки
   buttonSavePlace.classList.add('popup__save_type_disabled');
+  //!!Чтобы кнопка сабмита деактивировалась, нужно еще добавлять ей атрибут disabled OK
+  buttonSavePlace.setAttribute('disabled', '');
+  */
   closePopup(placePopup);
 }
 //функция закрыть popup по клику на оверлай
@@ -136,14 +151,7 @@ const handleOverlaypopupClick = popup => {
     }
   });
 };
-//функция закрыть popup по нажатию ESC
-const handlePopupKeydownEsc = (popup, openPopupClass) => {
-  document.addEventListener('keydown', e => {
-    if (e.code === 'Escape' && popup.classList.contains(openPopupClass)) {
-      closePopup(popup);
-    }
-  });
-};
+
 //функция добавления события на кнопку закрыть popup
 const handleButtonCloseClick = (popup, closeButtonSelector) => {
   const buttonClose = popup.querySelector(closeButtonSelector);
@@ -156,7 +164,7 @@ const addEventListenersClose = config => {
   const popupArray = Array.from(document.querySelectorAll(config.popupSelector));
   popupArray.forEach(popup => {
     handleOverlaypopupClick(popup);
-    handlePopupKeydownEsc(popup, config.openPopupClass);
+    // handlePopupKeydownEsc(popup, config.openPopupClass);
     handleButtonCloseClick(popup, config.closeButtonSelector);
   });
 };
@@ -166,10 +174,18 @@ initialCards.forEach(item => renderCard(item));
 //назначить событию обработчик
 addEventListenersClose({
   popupSelector: '.popup',
-  closeButtonSelector: '.popup__close',
-  openPopupClass: 'popup_opened'
+  closeButtonSelector: '.popup__close'
 });
 buttonEditeProfile.addEventListener('click', openPopupProfile);
 formProfile.addEventListener('submit', savePopupProfile);
 buttonAddPlace.addEventListener('click', () => openPopup(placePopup));
 formPlace.addEventListener('submit', savePopupPlace);
+
+/*const handlePopupKeydownEsc = (popup, openPopupClass) => {
+  document.addEventListener('keydown', e => {
+    if (e.code === 'Escape' && popup.classList.contains(openPopupClass)) {
+      closePopup(popup);
+    }
+  });
+};
+*/

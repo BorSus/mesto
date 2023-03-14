@@ -28,8 +28,14 @@ const checkFormValidity = inputList => {
 //функция скрыть|показать кнопку submit в зависимости от валидации формы
 const switchButtonSave = (inputList, button, inactiveButtonClass) => {
   if (checkFormValidity(inputList)) {
+    //!!Чтобы кнопка сабмита деактивировалась, нужно добавлять ей атрибут disabled OK
+    button.setAttribute('disabled', '');
     button.classList.add(inactiveButtonClass);
-  } else button.classList.remove(inactiveButtonClass);
+  } else {
+    button.classList.remove(inactiveButtonClass);
+    //!!Чтобы кнопка сабмита деактивировалась, нужно добавлять ей атрибут disabled OK
+    button.removeAttribute('disabled');
+  }
 };
 //функция проверить валидность input-text внутри формы
 const checkInputValidity = (form, formInput, inputErrorClass, errorClass) => {
@@ -52,6 +58,15 @@ const setEventListeners = (
   const inputList = Array.from(form.querySelectorAll(inputTextSelector));
   //найти кнопку submit внутри popup__form
   const buttonSave = form.querySelector(submitButtonSelector);
+  //!!Можно добавить здесь на форму обработчик события reset для деактивации кнопки сабмита OK
+  //добавляем событие reset на форму, при сохранении срабатывает reset form
+  form.addEventListener('reset', () => {
+    setTimeout(() => {
+      switchButtonSave(inputList, buttonSave, inactiveButtonClass), 0;
+      /*Так что же все таки происходит, если задержка установлена ​​на 0? Новое сообщение будет немедленно добавлено в очередь, но обработано оно будет только после того как текущий исполняемый код будет завершен.
+Проще говоря, обратный вызов выполняется только после завершения текущего выполняемого кода.*/
+    });
+  });
   // добавить событие для каждого  input-text внутри popup__form
   inputList.forEach(inputItem => {
     inputItem.addEventListener('input', function () {
