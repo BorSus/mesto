@@ -7,6 +7,9 @@ export class FormValidator {
     this._inputErrorClass = configuration.inputErrorClass;
     this._errorClass = configuration.errorClass;
     this._form = form;
+    this._submitButton = this._form.querySelector(this._submitButtonSelector);
+    //создать массив элементов input внутри формы
+    this._inputFormList = Array.from(this._form.querySelectorAll(this._inputTextSelector));
   }
 
   //метод показывает ошибку при вводе input
@@ -46,22 +49,26 @@ export class FormValidator {
       return !inputForm.validity.valid;
     });
   }
+  // метод деактивирует кнопку submit
+  _enableButtonSave() {
+    this._submitButton.removeAttribute('disabled');
+    this._submitButton.classList.remove(this._inactiveButtonClass);
+  }
+  _disableButtonSave() {
+    this._submitButton.setAttribute('disabled', '');
+    this._submitButton.classList.add(this._inactiveButtonClass);
+  }
   //метод скрывает|показывает кнопку submit в зависимости от валидности формы
   _switchButtonSave() {
-    const submitButton = this._form.querySelector(this._submitButtonSelector);
     if (this._checkFormValidity()) {
-      submitButton.setAttribute('disabled', '');
-      submitButton.classList.add(this._inactiveButtonClass);
+      this._disableButtonSave();
     } else {
-      submitButton.removeAttribute('disabled');
-      submitButton.classList.remove(this._inactiveButtonClass);
+      this._enableButtonSave();
     }
   }
 
   //метод добавляет события для элементов внутри формы
   _setEventListeners() {
-    //создать массив элементов input внутри формы
-    this._inputFormList = Array.from(this._form.querySelectorAll(this._inputTextSelector));
     // отменить действия браузера по умолчанию
     this._form.addEventListener('submit', function (evt) {
       evt.preventDefault();
@@ -83,5 +90,13 @@ export class FormValidator {
   //метод  включает валидацию формы
   enableValidation() {
     this._setEventListeners();
+  }
+
+  //!!Можно сделать отдельный  метод для очистки ошибок и управления кнопкой resetValidation. ok
+  resetValidation() {
+    this._switchButtonSave();
+    this._inputFormList.forEach(inputElement => {
+      this._hideInputError(inputElement);
+    });
   }
 }
