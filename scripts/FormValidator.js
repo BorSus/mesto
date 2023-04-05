@@ -92,7 +92,6 @@ export class FormValidator {
     this._setEventListeners();
   }
 
-  //!!Можно сделать отдельный  метод для очистки ошибок и управления кнопкой resetValidation. ok
   resetValidation() {
     this._switchButtonSave();
     this._inputFormList.forEach(inputElement => {

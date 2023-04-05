@@ -29,14 +29,13 @@ const initialCards = [
   }
 ];
 const configuration = {
+  formSelector: '.popup__form',
   inputTextSelector: '.popup__input-text',
   submitButtonSelector: '.popup__save',
   inactiveButtonClass: 'popup__save_type_disabled',
   inputErrorClass: 'popup__input-text_type_error',
   errorClass: 'popup__error_active'
 };
-
-const popupFormList = document.querySelectorAll('.popup__form');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const cardsFrame = document.querySelector('.elements');
@@ -58,7 +57,6 @@ const popupFullImg = document.querySelector('#popupFullImg');
 const popupImage = document.querySelector('.popup__image');
 const popupCaption = document.querySelector('.popup__caption');
 //============================Функции=============
-//!!Для создания новой карточки нужно сделать отдельную функцию createCard OK
 const createCard = cardData => {
   const card = new Card(cardData, '#card-place', handleCardClick);
   const cardPlace = card.generateCard();
@@ -68,6 +66,27 @@ const createCard = cardData => {
 function renderCard(card) {
   cardsFrame.prepend(card);
 }
+
+//создать объект список форм с валидаторами
+const formValidatorList = {};
+//функция создания объекта с экземплярами валидаторов всех форм и включение валидации
+const enableValidation = config => {
+  const arrayPopupForm = Array.from(document.querySelectorAll(config.formSelector));
+  arrayPopupForm.forEach(elementForm => {
+    //создать новый экземпляр класса FormValidator
+    const instanceFormValidator = new FormValidator(config, elementForm);
+    //получить атрибут name у формы
+    const formName = elementForm.getAttribute('name');
+    //console.log(formName);
+    //записать в объект со списоком  форм с валидаторами созданный экземпляр
+    formValidatorList[formName] = instanceFormValidator;
+    //включение валидации
+    instanceFormValidator.enableValidation();
+  });
+};
+enableValidation(configuration);
+//console.log(formValidatorList);
+
 //функция закрыть popup по нажатию ESC
 const closePopupKeydownEsc = e => {
   if (e.code === 'Escape') {
@@ -84,7 +103,6 @@ const openPopup = function (namePopup) {
   namePopup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupKeydownEsc);
 };
-//!!Нужно сделать отдельную функцию под названием handleCardClick в index.js ОК
 //открыть popupFullImg
 const handleCardClick = (name, link) => {
   popupImage.alt = name;
@@ -96,8 +114,7 @@ const handleCardClick = (name, link) => {
 function openPopupProfile() {
   inputName.value = profileName.textContent;
   inputDescription.value = profileDescription.textContent;
-  //!!Вызывать resetValidation нужно в том месте, где Вы обрабатываете нажатие на кнопку открытия попапа с формой. OK
-  new FormValidator(configuration, formProfile).resetValidation();
+  formValidatorList['profile-form'].resetValidation();
   openPopup(profilePopup);
 }
 //сохранить изменения и закрыть PopupProfile
@@ -109,8 +126,7 @@ function savePopupProfile(evt) {
 }
 //открыть placePopup
 function openPopupPlace() {
-  //!!Вызывать resetValidation нужно в том месте, где Вы обрабатываете нажатие на кнопку открытия попапа с формой. OK
-  // new FormValidator(configuration, formPlace).resetValidation();
+  formValidatorList['place-form'].resetValidation();
   openPopup(placePopup);
 }
 //сохранить изменения и закрыть PopupPlace
@@ -120,7 +136,6 @@ function savePopupPlace(evt) {
     name: inputPlacename.value,
     link: inputImageLink.value
   };
-  //!!Для создания новой карточки нужно сделать отдельную функцию createCard OK
   renderCard(createCard(cardData));
   formPlace.reset();
   closePopup(placePopup);
@@ -142,14 +157,9 @@ const handleButtonCloseClick = (popup, closeButtonSelector) => {
 
 // перебор массива, добавление мест из  initialCards
 initialCards.forEach(cardData => {
-  //!!Для создания новой карточки нужно сделать отдельную функцию createCard OK
   renderCard(createCard(cardData));
 });
-//перебор массива со всеми popup на странице и включение валидации
-Array.from(popupFormList).forEach(popupFormItem => {
-  const popupForm = new FormValidator(configuration, popupFormItem);
-  popupForm.enableValidation();
-});
+
 //функция добавление событий закрытия popup
 const addEventListenersClose = config => {
   //найти все popup
