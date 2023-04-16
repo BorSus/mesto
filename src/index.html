@@ -4,18 +4,22 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./pages/index.css" />
+    <!--<link rel="stylesheet" href="./pages/index.css" />-->
     <title>Mesto</title>
   </head>
   <body class="page">
     <header class="header">
-      <img src="./images/logo.svg" alt="Логотип Место" class="header__logo" />
+      <img src="<%=require('./images/logo.svg')%>" alt="Логотип Место" class="header__logo" />
     </header>
 
     <main class="content">
       <section class="profile">
         <div class="profile__info">
-          <img src="./images/profile_avatar.jpg" alt="Фото профиля" class="profile__avatar" />
+          <img
+            src="<%=require('./images/profile_avatar.jpg')%>"
+            alt="Фото профиля"
+            class="profile__avatar"
+          />
           <div class="profile__edit">
             <h1 class="profile__name">Тони Старк</h1>
             <button
@@ -116,7 +120,7 @@
             <input
               type="url"
               class="popup__input-text"
-              name="image-link"
+              name="imageLink"
               id="inputImageLink"
               value=""
               placeholder="Ссылка на картинку"
@@ -159,9 +163,6 @@
         </div>
       </article>
     </template>
-    <script type="module" src="./scripts/index.js"></script>
-    <script type="module" src="./scripts/Card.js"></script>
-    <!--<script type="module" src="./scripts/validate.js"></script>-->
-    <script type="module" src="./scripts/FormValidator.js"></script>
+    <!--  <script type="module" src="./pages/index.js"></script>-->
   </body>
 </html>
