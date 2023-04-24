@@ -12,8 +12,6 @@ export class UserInfo {
   }
   // метод  принимает новые данные пользователя и добавляет их на страницу.
   setUserInfo(data) {
-    console.log(data.name);
-    console.log(data.description);
     this._profileName.textContent = data.name;
     this.profileDescription.textContent = data.description;
   }

@@ -4,7 +4,7 @@ export class Popup {
     this._openPopupClass = 'popup_opened';
     this._popupCloseIcon = this._popup.querySelector('.popup__close');
     // устанавливаем привязанную функцию к this._handleEscClose, чтобы удалить ее позже
-    this._handleEscClose = this._closeByEsc.bind(this);
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
   //метод  отвечает за открытие  попапа.
   open() {
@@ -19,14 +19,14 @@ export class Popup {
     // console.log('я закрыл попап');
   }
   //метод который содержит логику закрытия попапа клавишей Esc
-  _closeByEsc(evt) {
+  _handleEscClose(evt) {
     if (evt.code === 'Escape') {
       // console.log('закрыть на Esc');
       this.close();
     }
   }
   //метод  который  добавляет слушатель клика на затемнённую область вокруг формы
-  _handleOverlaypopupClick() {
+  _handleOverlayPopupClick() {
     this._popup.addEventListener('click', e => {
       if (e.target === this._popup) {
         // console.log('закрыть по оверлай');
@@ -44,6 +44,6 @@ export class Popup {
 
   setEventListeners() {
     this._handleButtonCloseClick();
-    this._handleOverlaypopupClick();
+    this._handleOverlayPopupClick();
   }
 }
