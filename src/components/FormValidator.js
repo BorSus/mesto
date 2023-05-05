@@ -1,6 +1,5 @@
 export class FormValidator {
   constructor(configuration, form) {
-    //this._formSelector = config.formSelector;
     this._inputTextSelector = configuration.inputTextSelector;
     this._submitButtonSelector = configuration.submitButtonSelector;
     this._inactiveButtonClass = configuration.inactiveButtonClass;
@@ -91,7 +90,7 @@ export class FormValidator {
   enableValidation() {
     this._setEventListeners();
   }
-
+  //метод  сбрасывает валидацию формы
   resetValidation() {
     this._switchButtonSave();
     this._inputFormList.forEach(inputElement => {

@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--<link rel="stylesheet" href="./pages/index.css" />-->
     <title>Mesto</title>
   </head>
   <body class="page">
@@ -15,19 +14,21 @@
     <main class="content">
       <section class="profile">
         <div class="profile__info">
-          <img
-            src="<%=require('./images/profile_avatar.jpg')%>"
-            alt="Фото профиля"
-            class="profile__avatar"
-          />
+          <div class="profile__avatar-edite">
+            <img
+              src="<%=require('./images/profile_avatar.jpg')%>"
+              alt="Фото профиля"
+              class="profile__avatar"
+            />
+          </div>
           <div class="profile__edit">
-            <h1 class="profile__name">Тони Старк</h1>
+            <h1 class="profile__name">Имя пользователя</h1>
             <button
               type="button"
               class="profile__edite-button"
               aria-label="Редактировать профиль"
             ></button>
-            <p class="profile__description">Гений, миллиардер, плэйбой, филантроп</p>
+            <p class="profile__description">????</p>
           </div>
         </div>
         <button type="button" class="profile__add-button" aria-label="Добавить фото"></button>
@@ -69,7 +70,7 @@
             <input
               type="text"
               class="popup__input-text"
-              name="description"
+              name="about"
               id="inputDescription"
               value=""
               placeholder="Описание профиля"
@@ -106,7 +107,7 @@
             <input
               type="text"
               class="popup__input-text"
-              name="placename"
+              name="name"
               id="inputPlacename"
               value=""
               placeholder="Название"
@@ -116,11 +117,12 @@
             />
             <span class="popup__error" id="inputPlacename-error">&nbsp</span>
           </div>
+
           <div class="popup__valid-input">
             <input
               type="url"
               class="popup__input-text"
-              name="imageLink"
+              name="link"
               id="inputImageLink"
               value=""
               placeholder="Ссылка на картинку"
@@ -153,16 +155,74 @@
       </figure>
     </div>
 
+    <div class="popup" id="popupConfirm">
+      <div class="popup__container">
+        <h2 class="popup__title">Вы уверены?</h2>
+
+        <button
+          class="popup__close"
+          aria-label="Закрыть без сохранения"
+          type="button"
+          id="closeConfirm"
+        ></button>
+
+        <form class="popup__form" name="сonfirm-form" id="formConfirm">
+          <button class="popup__save" type="submit" id="saveСonfirm">Да</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup" id="popupAvatar">
+      <div class="popup__container">
+        <h2 class="popup__title">Обновить аватар</h2>
+        <button
+          class="popup__close"
+          aria-label="Закрыть без сохранения"
+          type="button"
+          id="closeAvatar"
+        ></button>
+
+        <form class="popup__form" name="avatar-form" id="formAvatar">
+          <div class="popup__valid-input">
+            <input
+              type="url"
+              class="popup__input-text"
+              name="avatar"
+              id="inputAvatarLink"
+              value=""
+              placeholder="Ссылка на картинку"
+              required
+            />
+            <span class="popup__error" id="inputAvatarLink-error">&nbsp</span>
+          </div>
+          <button
+            class="popup__save popup__save_type_disabled"
+            type="submit"
+            id="saveAvatar"
+            disabled
+          >
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
+
     <template id="card-place">
       <article class="element">
-        <button type="button" class="element__delete" aria-label="Удалить"></button>
-        <img src="./images/bratislava.jpg" alt="описание картинки" class="element__img" />
+        <button
+          type="button"
+          class="element__delete element__delete_hide"
+          aria-label="Удалить"
+        ></button>
+        <img src="" alt="описание картинки" class="element__img" />
         <div class="element__label">
           <h2 class="element__caption"></h2>
-          <button type="button" class="element__like" aria-label="Нравится"></button>
+          <div class="element__like-block">
+            <button type="button" class="element__like" aria-label="Нравится"></button>
+            <p class="element__like-score">00</p>
+          </div>
         </div>
       </article>
     </template>
-    <!--  <script type="module" src="./pages/index.js"></script>-->
   </body>
 </html>

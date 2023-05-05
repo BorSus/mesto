@@ -16,12 +16,12 @@ export class Popup {
   close() {
     this._popup.classList.remove(this._openPopupClass);
     document.removeEventListener('keydown', this._handleEscClose);
-    // console.log('я закрыл попап');
+    //console.log('я закрыл попап');
   }
   //метод который содержит логику закрытия попапа клавишей Esc
   _handleEscClose(evt) {
     if (evt.code === 'Escape') {
-      // console.log('закрыть на Esc');
+      //console.log('закрыть на Esc');
       this.close();
     }
   }
@@ -37,11 +37,11 @@ export class Popup {
   //метод который  добавляет слушатель клика иконке закрытия попапа.
   _handleButtonCloseClick() {
     this._popupCloseIcon.addEventListener('click', () => {
-      // console.log('закрыть по иконке');
+      //console.log('закрыть по иконке');
       this.close();
     });
   }
-
+  //метод добавляет события для элементов
   setEventListeners() {
     this._handleButtonCloseClick();
     this._handleOverlayPopupClick();

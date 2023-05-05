@@ -8,7 +8,10 @@ export class Section {
     this._container = document.querySelector(containerSelector);
   }
   //принимает DOM-элемент и добавляет его в HTML разметку
-  addItem(element) {
+  addItemServer(element) {
+    this._container.append(element);
+  }
+  addItemUser(element) {
     this._container.prepend(element);
   }
   // Метод удаляет всё содержимое поля _container

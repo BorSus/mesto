@@ -12,12 +12,10 @@ export default class PopupWithForm extends Popup {
     this._inputsArray.forEach(input => {
       dataInputValues[input.getAttribute('name')] = input.value;
     });
-    console.log(dataInputValues);
     return dataInputValues;
   }
   //метод принимает объект с данными  для установки в input формы.
   setInputValues(data) {
-    console.log(this._inputsArray);
     this._inputsArray.forEach(input => {
       // ключ переданного объекта совпадает с input.name, то значение записываем в input.value
       if (data[input.name]) {
@@ -25,18 +23,17 @@ export default class PopupWithForm extends Popup {
       }
     });
   }
-  //Метод setEventListeners класса PopupWithForm должен не только добавлять обработчик клика иконке закрытия, но и добавлять обработчик сабмита формы.
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener('submit', evt => {
       evt.preventDefault();
+      console.log(this._getInputValues());
       this._functionSubmitForm(this._getInputValues());
       this.close();
     });
   }
   close() {
     super.close();
-    //Перезаписывает родительский метод close, так как при закрытии попапа форма должна ещё и сбрасываться.
     this._form.reset();
   }
 }
