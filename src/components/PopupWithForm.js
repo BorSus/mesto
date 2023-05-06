@@ -4,7 +4,9 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);
     this._functionSubmitForm = functionSubmitForm;
     this._form = this._popup.querySelector('.popup__form');
+    this._submitButton = this._popup.querySelector('.popup__save');
     this._inputsArray = Array.from(this._form.querySelectorAll('.popup__input-text'));
+    this._submitButtonTextContent = this._popup.querySelector('.popup__save').textContent;
   }
   //метод собирает данные всех полей формы.
   _getInputValues() {
@@ -13,6 +15,14 @@ export default class PopupWithForm extends Popup {
       dataInputValues[input.getAttribute('name')] = input.value;
     });
     return dataInputValues;
+  }
+  setSubmitButtonLoading() {
+    this._submitButton.textContent = 'Сохранение...';
+    this._submitButton.classList.add('popup__save_type_loading');
+  }
+  unsetSubmitButtonLoading() {
+    this._submitButton.textContent = this._submitButtonTextContent;
+    this._submitButton.classList.remove('popup__save_type_loading');
   }
   //метод принимает объект с данными  для установки в input формы.
   setInputValues(data) {
@@ -27,9 +37,7 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
     this._form.addEventListener('submit', evt => {
       evt.preventDefault();
-      console.log(this._getInputValues());
       this._functionSubmitForm(this._getInputValues());
-      this.close();
     });
   }
   close() {

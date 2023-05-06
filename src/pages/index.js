@@ -9,10 +9,7 @@ import {
   buttonEditeProfile,
   buttonAvatarEdit,
   optionsApi,
-  optionsUserInfo,
-  buttonSubmitProfile,
-  buttonSubmitAvatar,
-  buttonSubmitPlace
+  optionsUserInfo
 } from '../utils/constants.js';
 import { Section } from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
@@ -39,7 +36,15 @@ const enableValidation = config => {
   });
 };
 enableValidation(configuration);
-
+//===Section==
+const section = new Section(
+  {
+    renderer: item => {
+      section.addItemServer(createCard(item));
+    }
+  },
+  '.elements'
+);
 //===API===
 //создать экземпляр api класса Api
 const api = new Api(optionsApi);
@@ -52,13 +57,14 @@ let idMe;
 //сохранить изменения и закрыть PopupProfile
 const submitFormProfile = async profileData => {
   try {
-    buttonSubmitProfile.textContent = `${buttonSubmitProfile.textContent}...`;
+    popupProfile.setSubmitButtonLoading();
     const response = await api.patchUserInfo(profileData);
     infoProfile.setUserInfo(response);
+    popupProfile.close();
   } catch (error) {
     console.error(`Ошибка при редактировании данных пользователя: ${error}`);
   } finally {
-    buttonSubmitProfile.textContent = buttonSubmitProfile.textContent.slice(0, -3);
+    popupProfile.unsetSubmitButtonLoading();
     console.info('Редактирование данных пользователя-завершено');
   }
 };
@@ -73,17 +79,18 @@ const openPopupProfile = () => {
   //console.log(popupProfile._getInputValues());
   popupProfile.open();
 };
+//===popupAvatar (редактирование аватара пользователя)===
 //Функция SubmitForm для popupAvatar
 const submitFormAvatar = async avatar => {
   try {
-    buttonSubmitAvatar.textContent = `${buttonSubmitAvatar.textContent}...`;
+    popupAvatar.setSubmitButtonLoading();
     const response = await api.patchUserAvatar(avatar);
-    //console.log(response);
     infoProfile.setUserAvatar(response);
+    popupAvatar.close();
   } catch (error) {
     console.error(`Ошибка при редактировании аватара пользователя : ${error}`);
   } finally {
-    buttonSubmitAvatar.textContent = buttonSubmitAvatar.textContent.slice(0, -3);
+    popupAvatar.unsetSubmitButtonLoading();
     console.info('Редактирование аватара пользователя-завершено');
   }
 };
@@ -95,7 +102,7 @@ function openPopupAvatar() {
   popupAvatar.open();
 }
 
-//===CARDS===
+//===CARD===
 //Функция создает DOM-element карточки готовый для добавления на страницу
 const createCard = cardData => {
   const card = new Card(
@@ -113,10 +120,11 @@ const createCard = cardData => {
 const handleCardClick = (name, link) => {
   popupFullImg.open(name, link);
 };
+//===PopupWithConfirmation===
 //создать экземпляр popupConfirm (подтверждение удаления карточки) класса PopupWithConfirmation
 const popupConfirm = new PopupWithConfirmation('#popupConfirm');
 popupConfirm.setEventListeners();
-//Функция открыть popupConfirm
+//Функция открыть подтверждение удаления карточки
 const handleDelClick = card => {
   //Функция SubmitForm для popupConfirm
   const submitFormConfirm = async () => {
@@ -124,6 +132,7 @@ const handleDelClick = card => {
       const response = await api.deleteCard(card.id);
       console.info(response);
       card.deleteCard();
+      popupConfirm.close();
     } catch (error) {
       console.error(`Ошибка при удалении карточки: ${error}`);
     } finally {
@@ -140,13 +149,9 @@ const handleLikeClick = async card => {
     if (!card.isLikedCard) {
       response = await api.putLike(card.id);
       card.setLike();
-      //console.info(response);
-      //console.info(`поставил лайк`);
     } else {
       response = await api.deleteLike(card.id);
       card.deleteLike();
-      //console.info(response);
-      //console.info(`удалил лайк`);
     }
   } catch (error) {
     console.error(`Ошибка при установка|удаления лайка карточки на странице: ${error}`);
@@ -155,27 +160,18 @@ const handleLikeClick = async card => {
     console.info('установка|удаление лайка карточки на странице-завершено');
   }
 };
-
+//===popupPlace добавление новой карточки===
 //Функция SubmitForm для popupPlace
 const submitFormPlace = async cardData => {
   try {
-    buttonSubmitPlace.textContent = `${buttonSubmitPlace.textContent}...`;
+    popupPlace.setSubmitButtonLoading();
     const response = await api.postNewCard(cardData);
-    //console.info(responsePostNewCard);
-    //Экземпляр класса Section создаётся для каждого контейнера, в который требуется отрисовывать элементы.
-    const section = new Section(
-      {
-        renderer: item => {
-          section.addItemUser(createCard(item));
-        }
-      },
-      '.elements'
-    );
     section.addItemUser(createCard(response));
+    popupPlace.close();
   } catch (error) {
     console.error(`Ошибка при добавлении новой карточки на страницу: ${error}`);
   } finally {
-    buttonSubmitPlace.textContent = buttonSubmitPlace.textContent.slice(0, -3);
+    popupPlace.unsetSubmitButtonLoading();
     console.info('Добавление новой карточки на странице-завершено');
   }
 };
@@ -193,52 +189,25 @@ const popupFullImg = new PopupWithImage('#popupFullImg');
 //добаить слушателей событий
 popupFullImg.setEventListeners();
 
-//функция добавить данные с сервера на страницу
-async function receiveData() {
-  try {
-    page.classList.add('page_wait');
-    const userInfo = await api.getUserInfo();
-    const initialCards = await api.getInitialCards();
-    //console.log(userInfo);
-    infoProfile.setUserInfo(userInfo);
-    infoProfile.setUserAvatar(userInfo);
-    idMe = `${userInfo._id}`;
-    //console.log(`Id пользователя ${idMe}`);
-    //console.log(initialCards);
-    const section = new Section(
-      {
-        items: initialCards,
-        renderer: item => {
-          section.addItemServer(createCard(item));
-        }
-      },
-      '.elements'
-    );
-    section.renderItems();
-  } catch (error) {
-    console.error(`Ошибка при добавлении данных сервера: ${error}`);
-  } finally {
-    console.log('Добавление данных-завершено');
-    page.classList.remove('page_wait');
-  }
+function receiveData() {
+  page.classList.add('page_wait');
+  Promise.all([api.getUserInfo(), api.getInitialCards()])
+    .then(([userInfo, initialCards]) => {
+      infoProfile.setUserInfo(userInfo);
+      infoProfile.setUserAvatar(userInfo);
+      idMe = `${userInfo._id}`;
+      section.renderItems(initialCards);
+    })
+    .catch(error => {
+      console.error(`Ошибка при добавлении данных сервера: ${error}`);
+    })
+    .finally(() => {
+      console.info('Добавление данных с сервера-завершено');
+      page.classList.remove('page_wait');
+    });
 }
 receiveData();
 
 buttonAddPlace.addEventListener('click', openPopupPlace);
 buttonEditeProfile.addEventListener('click', openPopupProfile);
 buttonAvatarEdit.addEventListener('click', openPopupAvatar);
-
-/*
-const test = '/644fb2eaab818800859d7b57';
-async function testFunction() {
-  try {
-    const info = await api.deleteCard(test);
-    console.log(info);
-  } catch (error) {
-    console.error(`Ошибка : ${error}`);
-  } finally {
-    console.log('test done');
-  }
-}
-testFunction();
-*/

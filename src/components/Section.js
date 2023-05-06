@@ -1,7 +1,5 @@
 export class Section {
-  constructor({ items, renderer }, containerSelector) {
-    //items — это массив данных, которые нужно добавить на страницу при инициализации класса
-    this._items = items;
+  constructor({ renderer }, containerSelector) {
     //renderer — это функция, которая отвечает за создание и отрисовку данных на странице.
     this._renderer = renderer;
     //селектор контейнера, в который нужно добавлять созданные элементы.
@@ -19,9 +17,9 @@ export class Section {
     this._container.innerHTML = '';
   }
   //метод, который отвечает за отрисовку всех элементов переданных в массиве данных
-  renderItems() {
+  renderItems(array) {
     this._clear();
-    this._items.forEach(item => {
+    array.forEach(item => {
       this._renderer(item);
     });
   }
